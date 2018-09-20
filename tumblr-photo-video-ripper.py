@@ -160,7 +160,10 @@ class CrawlerScheduler(object):
             worker.start()
 
         for site in self.sites:
-            self.download_media(site)
+            site = site[0:site.find('%', 1)]
+            command = 'twphotos -u ' + site
+            os.system(command)
+# self.download_media(site)
 
     def download_media(self, site):
         self.download_photos(site)
@@ -248,7 +251,7 @@ def illegal_json():
 
 
 def parse_sites(filename):
-    with open(filename, "r") as f:
+    with open(filename, "r", encoding='UTF-8') as f:
         raw_sites = f.read().rstrip().lstrip()
 
     raw_sites = raw_sites.replace("\t", ",") \
